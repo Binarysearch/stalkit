@@ -32,7 +32,14 @@ class MapContainer extends Component {
     };
 
     render() {
-
+        var iconGreen = {
+            url: process.env.PUBLIC_URL + '/marker-green.png',
+            scaledSize: new this.props.google.maps.Size(50, 50), // scaled size
+        };
+        var iconRed = {
+            url: process.env.PUBLIC_URL + '/marker-red.png',
+            scaledSize: new this.props.google.maps.Size(50, 50), // scaled size
+        };
         const markers = DEVICES.map(
             device => <Marker
                 title="Location"
@@ -41,6 +48,7 @@ class MapContainer extends Component {
                     lat: device.Geometry.Coordinates[0],
                     lng: device.Geometry.Coordinates[1]
                 }}
+                icon={device.Active ? iconGreen : iconRed}
                 onClick={this.onMarkerClick}
                 device={device}
             />
