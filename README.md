@@ -24,3 +24,11 @@ Runs the script to build de docker image.
 
 Runs the docker image.
 
+
+### `./deploy.sh`
+
+Runs the script to create deployment and service in k8s.
+
+## Working demo:
+
+https://stalkit.galaxycivitas.com

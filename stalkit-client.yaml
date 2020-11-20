@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: stalkit
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: stalkit-client
+  name: stalkit-client
+  namespace: stalkit
+spec:
+  ports:
+  - name: tcp-80-80-nqhlx
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    k8s-app: stalkit-client
+  sessionAffinity: None
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: stalkit-client
+  name: stalkit-client
+  namespace: stalkit
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      k8s-app: stalkit-client
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        k8s-app: stalkit-client
+      name: stalkit-client
+    spec:
+      containers:
+      - image: hophop/stalkit-client:0.0.1
+        imagePullPolicy: Always
+        name: stalkit-client
+        resources: {}
